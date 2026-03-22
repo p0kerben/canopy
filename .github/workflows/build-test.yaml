@@ -23,13 +23,13 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
       - name: Set up Go
         uses: actions/setup-go@v6
         with:
           go-version-file: go.mod
-
-      - name: Checkout code
-        uses: actions/checkout@v5
 
       - name: Build Services
         run: make build/canopy-full
@@ -38,13 +38,13 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
       - name: Set up Go
         uses: actions/setup-go@v6
         with:
           go-version-file: go.mod
-
-      - name: Checkout code
-        uses: actions/checkout@v5
 
       - name: Set up cache
         uses: actions/cache@v5
