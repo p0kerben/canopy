@@ -35,15 +35,15 @@ jobs:
           GOARCH=arm64 CGO_ENABLED=0 GOOS=linux go build -a -o dist/cli-linux-arm64 ./cmd/main/...
 
       - name: Create GitHub release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ github.event.inputs.tag }}
-          target_commitish: ${{ github.sha }}
-          files: |
-            dist/cli-linux-amd64
-            dist/cli-linux-arm64
+        run: |
+          gh release create "${{ github.event.inputs.tag }}" \
+            dist/cli-linux-amd64 \
+            dist/cli-linux-arm64 \
+            --target "${{ github.sha }}" \
+            --title "${{ github.event.inputs.tag }}" \
+            --generate-notes
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Dispatch to Docker release repo
         run: |
